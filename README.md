@@ -27,7 +27,7 @@ termux-setup-storage
 
 # TERMUX DA ÇALIŞTIRMA KOMUTU
 
-git clone https://github.com/bygokhanyakut/Xpert-hack 
+git clone https://github.com/Byyazilimci/Xpert-hack
 
 cd storage 
 
